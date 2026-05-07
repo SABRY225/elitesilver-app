@@ -1,5 +1,6 @@
 import 'package:customer/controller/cart_controller.dart';
 import 'package:customer/controller/product_details_controller.dart';
+import 'package:customer/data/datasource/remote/linkapi.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../core/class/status_request.dart';
@@ -13,8 +14,8 @@ class ProductDetails extends StatelessWidget {
     Get.put(ProductDetailsController());
     Get.put(CartController());
     return Scaffold(
-      backgroundColor: const Color(0xFF121212), // أسود مطفي فخم
-      bottomNavigationBar: _buildBottomAction(context), // أزرار السلة والمفضلة
+      backgroundColor: const Color(0xFF121212),
+      bottomNavigationBar: _buildBottomAction(context),
 
       body: GetBuilder<ProductDetailsController>(
         init: ProductDetailsController(),
@@ -25,14 +26,14 @@ class ProductDetails extends StatelessWidget {
               child: CircularProgressIndicator(color: Colors.orange),
             );
           } else if (controller.statusRequest == StatusRequest.offlinefailure) {
-            return _buildError("لا يوجد اتصال بالإنترنت");
+            return _buildError("no_internet_connection".tr);
           } else if (controller.statusRequest == StatusRequest.serverfailure) {
-            return _buildError("خطأ في الخادم");
+            return _buildError("server_error".tr);
           } else if (controller.product.isEmpty) {
-            return _buildError("المنتج غير موجود");
+            return _buildError("Product not available".tr);
           } else {
             var product = controller.product;
-            String baseUrl = "http://192.168.1.5:5000/";
+            String baseUrl = AppLink.imagesStatic;
             List images = jsonDecode(product['galleryImages']);
 
             return Scaffold(
@@ -41,7 +42,6 @@ class ProductDetails extends StatelessWidget {
                 children: [
                   CustomScrollView(
                     slivers: [
-                      // 1. الجزء العلوي (الصورة مع App Bar متحرك)
                       SliverAppBar(
                         expandedHeight: 400,
                         pinned: true,
@@ -51,7 +51,7 @@ class ProductDetails extends StatelessWidget {
                             fit: StackFit.expand,
                             children: [
                               Image.network(
-                                baseUrl + product['image'],
+                                '${baseUrl} /' + product['image'],
                                 fit: BoxFit.cover,
                               ),
                               const DecoratedBox(
@@ -94,7 +94,7 @@ class ProductDetails extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    "\JOD${product['price']}",
+                                    "jod".tr + " ${product['price']}",
                                     style: const TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
@@ -105,9 +105,8 @@ class ProductDetails extends StatelessWidget {
                               ),
                               const SizedBox(height: 15),
 
-                              // الوصف
-                              const Text(
-                                "Description",
+                              Text(
+                                "Description".tr,
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.white,
@@ -117,7 +116,7 @@ class ProductDetails extends StatelessWidget {
                               const SizedBox(height: 8),
                               Text(
                                 product['description'] ??
-                                    "No description available.",
+                                    "No description available.".tr,
                                 style: const TextStyle(
                                   color: Colors.grey,
                                   fontSize: 16,
@@ -126,10 +125,9 @@ class ProductDetails extends StatelessWidget {
                               ),
                               const SizedBox(height: 25),
 
-                              // معرض الصور الصغير
                               if (images.isNotEmpty) ...[
-                                const Text(
-                                  "Gallery",
+                                Text(
+                                  "Gallery".tr,
                                   style: TextStyle(
                                     fontSize: 18,
                                     color: Colors.white,
@@ -152,7 +150,7 @@ class ProductDetails extends StatelessWidget {
                                         ),
                                         image: DecorationImage(
                                           image: NetworkImage(
-                                            baseUrl + images[index],
+                                            '${baseUrl} /' + images[index],
                                           ),
                                           fit: BoxFit.cover,
                                         ),
@@ -164,8 +162,8 @@ class ProductDetails extends StatelessWidget {
                               ],
 
                               // المواصفات الفنية (بشكل Grid أو Cards)
-                              const Text(
-                                "Specifications",
+                              Text(
+                                "Specifications".tr,
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.white,
@@ -179,32 +177,32 @@ class ProductDetails extends StatelessWidget {
                                 alignment: WrapAlignment.start,
                                 children: [
                                   _buildSpecChip(
-                                    "SKU",
+                                    "SKU".tr,
                                     product['sku'],
                                     Icons.qr_code_2_rounded,
                                   ),
                                   _buildSpecChip(
-                                    "Stock",
+                                    "Stock".tr,
                                     product['stock'].toString(),
                                     Icons.inventory_2_outlined,
                                   ),
                                   _buildSpecChip(
-                                    "Silver Type",
+                                    "Silver Type".tr,
                                     product['silverType'] ?? "N/A",
                                     Icons.type_specimen_sharp,
                                   ),
                                   _buildSpecChip(
-                                    "Stone",
+                                    "Stone".tr,
                                     product['stoneType'],
                                     Icons.diamond_outlined,
                                   ),
                                   _buildSpecChip(
-                                    "Weight",
+                                    "Weight".tr,
                                     product['weight']?.toString() ?? "N/A",
                                     Icons.monitor_weight_outlined,
                                   ),
                                   _buildSpecChip(
-                                    "Price per Gram",
+                                    "Price per Gram".tr,
                                     product['pricePerGram']?.toString() ??
                                         "N/A",
                                     Icons.attach_money_outlined,
@@ -335,10 +333,7 @@ class ProductDetails extends StatelessWidget {
             future: controller.getFavorites(),
             builder: (context, snapshot) {
               bool fav = false;
-              print('snapshot : ${snapshot.hasData}');
               if (snapshot.hasData) {
-                print(snapshot.hasData);
-                print('snapshot.data ${snapshot.data}');
                 fav = controller.isFavorite(snapshot.data!);
               }
               return Container(
@@ -375,13 +370,13 @@ class ProductDetails extends StatelessWidget {
               onPressed: () {
                 controllerCart.addToCart(controller.product);
               },
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.shopping_bag_outlined),
                   SizedBox(width: 10),
                   Text(
-                    "Add to Cart",
+                    "Add to Cart".tr,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ],

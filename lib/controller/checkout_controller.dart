@@ -16,7 +16,7 @@ class CheckoutController extends GetxController {
   final phoneController = TextEditingController();
   final phone2Controller = TextEditingController();
   final addressDetailsController = TextEditingController();
-
+  var selectedPaymentMethod = "cash".obs;
   @override
   void onInit() {
     fetchCities();
@@ -27,9 +27,7 @@ class CheckoutController extends GetxController {
   void fetchCities() async {
     try {
       isLoading(true);
-      var response = await http.get(
-        Uri.parse(AppLink.hippingCities),
-      );
+      var response = await http.get(Uri.parse(AppLink.hippingCities));
       if (response.statusCode == 200) {
         cities.value = jsonDecode(response.body);
       }
@@ -62,7 +60,7 @@ class CheckoutController extends GetxController {
         "shipping": shippingCost,
         "subtotal": cartController.total,
         "total": cartController.total + shippingCost,
-        "paymentMethod": "cod",
+        "paymentMethod": selectedPaymentMethod.value,
         "cartItems": cartController.cartItems
             .map(
               (p) => {
@@ -84,7 +82,7 @@ class CheckoutController extends GetxController {
 
       if (response.statusCode == 201 || response.statusCode == 200) {
         cartController.clearCart();
-        Get.offAllNamed('/home'); 
+        Get.offAllNamed('/home');
         if (Get.isRegistered<OrderController>()) {
           Get.find<OrderController>().getData();
         }
@@ -95,12 +93,26 @@ class CheckoutController extends GetxController {
           colorText: Colors.white,
         );
       } else {
-        Get.snackbar(
-         "Error".tr,
-         "Failed to place order".tr,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-        );
+        try {
+          var responseData = jsonDecode(response.body);
+
+          String errorMessage =
+              responseData["error"] ?? 'Failed to place order'.tr;
+
+          Get.snackbar(
+            "Error".tr,
+            errorMessage,
+            backgroundColor: Colors.redAccent,
+            colorText: Colors.white,
+            snackPosition: SnackPosition.BOTTOM,
+          );
+        } catch (e) {
+          Get.snackbar(
+            "Error".tr,
+            "Something went wrong".tr,
+            backgroundColor: Colors.red,
+          );
+        }
       }
     } catch (e) {
       Get.snackbar(

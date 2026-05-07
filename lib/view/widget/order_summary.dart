@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class OrderSummary extends StatelessWidget {
   final dynamic itemPrice;
@@ -28,10 +29,10 @@ class OrderSummary extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _buildRow("Subtotal ($quantity items)", "${subtotal.toStringAsFixed(2)} JOD"),
-          _buildRow("Shipping Fee", "${shipping.toStringAsFixed(2)} JOD"),
+          _buildRow("Subtotal".tr +"($quantity "+"items".tr+")", "${subtotal.toStringAsFixed(2)} "+"jod".tr),
+          _buildRow("Shipping Fee".tr, "${shipping.toStringAsFixed(2)} "+"jod".tr),
           const Divider(color: Colors.white10, height: 20),
-          _buildRow("Total Amount", "${total.toStringAsFixed(2)} JOD", isTotal: true),
+          _buildRow("Total Amount".tr, "${total.toStringAsFixed(2)} "+"jod".tr, isTotal: true),
         ],
       ),
     );

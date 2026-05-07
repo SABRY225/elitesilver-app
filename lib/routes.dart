@@ -2,6 +2,7 @@ import 'package:customer/view/screen/LanguageScreen.dart';
 import 'package:customer/view/screen/categoryProducts_screen.dart';
 import 'package:customer/view/screen/checkoutInvestment_screen.dart';
 import 'package:customer/view/screen/checkout_screen.dart';
+import 'package:customer/view/screen/custom_order_screen.dart';
 import 'package:customer/view/screen/search_screen.dart';
 import 'package:customer/view/screen/settingsLanguageScreen.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class AppRoutes {
   static const String categoryProducts = "/category";
   static const String search = "/search";
   static const String selectLanguage = "/select-language";
+  static const String customOrder = "/custom-order";
 
   static Map<String, Widget Function(BuildContext)> routes = {
     login: (context) => const LoginScreen(),
@@ -49,5 +51,6 @@ class AppRoutes {
     investmentCheckout: (context) => const CheckoutInvestmentPage(),
     categoryProducts: (context) => const CategoryProductsPage(),
     selectLanguage: (context) => const SettingsLanguageScreen(),
+    customOrder: (context) => const CustomOrderScreen(),
   };
 }

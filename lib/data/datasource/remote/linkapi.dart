@@ -15,6 +15,7 @@ static const String imagesStatic = "http://192.168.1.5:5000";
   static const String cart ="$server/cart";
   static const String hippingCities ="$server/city/shipping-cities";
   static const String createOrder ="$server/orders/new";
+  static const String createCustomOrder ="$server/custom/order";
   
   // الروابط التي ستحتاجها في الـ FavoriteController الجديد
   static const String favoriteView   = "$server/favorite/view";

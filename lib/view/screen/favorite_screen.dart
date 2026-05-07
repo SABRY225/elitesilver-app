@@ -14,8 +14,8 @@ class FavoriteScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text(
-          "MY FAVORITES",
+        title:  Text(
+          "favorites".tr,
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -28,7 +28,6 @@ class FavoriteScreen extends StatelessWidget {
       ),
       body: GetBuilder<FavoriteController>(
         builder: (controller) {
-          // استخدام statusRequest للتعامل مع حالات الـ API المختلفة
           if (controller.statusRequest == StatusRequest.loading) {
             return const Center(
               child: CircularProgressIndicator(color: Colors.orange),
@@ -36,14 +35,14 @@ class FavoriteScreen extends StatelessWidget {
           }
 
           if (controller.favoritesList.isEmpty) {
-            return const Center(
+            return  Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.favorite_border, color: Colors.grey, size: 80),
                   SizedBox(height: 10),
                   Text(
-                    "قائمة المفضلة فارغة",
+                    "My favorites list is empty".tr,
                     style: TextStyle(color: Colors.grey, fontSize: 18),
                   ),
                 ],
@@ -62,10 +61,8 @@ class FavoriteScreen extends StatelessWidget {
             itemCount: controller.favoritesList.length,
             itemBuilder: (context, index) {
               var productItem = controller.favoritesList[index];
-              print("productItem ${index}: ${productItem}");
               return InkWell(
                 onTap: () {
-                  // تمرير المنتج كـ arguments لصفحة التفاصيل
                   Get.toNamed(
                     "/product-details",
                     arguments: {"product": productItem},
@@ -88,7 +85,6 @@ class FavoriteScreen extends StatelessWidget {
                                 top: Radius.circular(15),
                               ),
                               child: Image.network(
-                                // استخدام الرابط من AppLink مع مسار الصور
                                 "${AppLink.imagesStatic}/${productItem['image']}",
                                 fit: BoxFit.cover,
                                 width: double.infinity,
@@ -102,7 +98,6 @@ class FavoriteScreen extends StatelessWidget {
                                     ),
                               ),
                             ),
-                            // زر الحذف من المفضلة
                             Positioned(
                               top: 5,
                               right: 5,

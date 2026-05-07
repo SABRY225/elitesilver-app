@@ -44,9 +44,31 @@ class CheckoutScreen extends StatelessWidget {
                       controller.addressDetailsController, Icons.map, TextInputType.multiline),
 
                   const SizedBox(height: 30),
-                  _buildSectionTitle("PAYMENT METHOD".tr),
-                  _paymentOption("Cash on Delivery".tr, true, Icons.money),
-                  _paymentOption("Credit Card (Soon)".tr, false, Icons.credit_card),
+                  // ابحث عن الجزء الخاص بـ PAYMENT METHOD واستبدله بهذا:
+_buildSectionTitle("PAYMENT METHOD".tr),
+Obx(() => Column(
+  children: [
+    _paymentOption(
+      "Cash on Delivery".tr, 
+      controller.selectedPaymentMethod.value == "cash", 
+      Icons.money,
+      () => controller.selectedPaymentMethod.value = "cash",
+    ),
+    _paymentOption(
+      "Pay My Points".tr, 
+      controller.selectedPaymentMethod.value == "points", 
+      Icons.radio_button_checked_sharp,
+      () => controller.selectedPaymentMethod.value = "points",
+    ),
+    // خيار البطاقة يبقى غير مفعل حالياً كما في كودك
+    _paymentOption(
+      "Credit Card (Soon)".tr, 
+      false, 
+      Icons.credit_card,
+      null, // لا يمكن الضغط عليه
+    ),
+  ],
+)),
 
                   const SizedBox(height: 30),
                   _buildOrderSummary(cartController, controller),
@@ -194,10 +216,25 @@ Widget _buildCityDropdown(CheckoutController controller) {
     child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text(label, style: const TextStyle(color: Colors.grey)), Text(value, style: const TextStyle(color: Colors.white))]),
   );
 
-  Widget _paymentOption(String title, bool active, IconData icon) => Container(
-    margin: const EdgeInsets.only(bottom: 10),
-    padding: const EdgeInsets.all(15),
-    decoration: BoxDecoration(color: const Color(0xFF1A1A1A), borderRadius: BorderRadius.circular(15), border: Border.all(color: active ? Colors.orange : Colors.transparent)),
-    child: Row(children: [Icon(icon, color: active ? Colors.orange : Colors.grey), const SizedBox(width: 15), Text(title, style: TextStyle(color: active ? Colors.white : Colors.grey)), const Spacer(), if(active) const Icon(Icons.check_circle, color: Colors.orange, size: 20)]),
+Widget _paymentOption(String title, bool active, IconData icon, VoidCallback? onTap) => GestureDetector(
+    onTap: onTap,
+    child: Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: const Color(0xFF1A1A1A),
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: active ? Colors.orange : Colors.transparent),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: active ? Colors.orange : Colors.grey),
+          const SizedBox(width: 15),
+          Text(title, style: TextStyle(color: active ? Colors.white : Colors.grey)),
+          const Spacer(),
+          if (active) const Icon(Icons.check_circle, color: Colors.orange, size: 20)
+        ],
+      ),
+    ),
   );
 }

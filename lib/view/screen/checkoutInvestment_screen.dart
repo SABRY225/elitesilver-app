@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../data/datasource/remote/checkout_view_model.dart';
 import '../widget/custom_text_field.dart';
 import '../widget/order_summary.dart';
+import 'package:get/get.dart';
 
 class CheckoutInvestmentPage extends StatefulWidget {
   const CheckoutInvestmentPage({super.key});
@@ -47,7 +48,7 @@ class _CheckoutInvestmentPageState extends State<CheckoutInvestmentPage> {
     return Scaffold(
       backgroundColor: const Color(0xFF0F0F0F),
       appBar: AppBar(
-        title: const Text("Checkout", style: TextStyle(color: Colors.white)),
+        title:  Text("checkout investment".tr, style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
@@ -63,46 +64,46 @@ class _CheckoutInvestmentPageState extends State<CheckoutInvestmentPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildLabel("Contact Information"),
+                    _buildLabel("Contact Information".tr),
                     CustomCheckoutField(
                       controller: _phone,
-                      label: "Primary Phone",
+                      label: "Primary Phone".tr,
                       prefixText: "+962 ",
                       maxLength: 9,
                       validator: (val) {
                         if (val == null || val.isEmpty)
-                          return "Please enter your phone number";
+                          return "Please enter your phone number".tr;
                         if (val.length != 9)
-                          return "Phone number must be 9 digits";
+                          return "Phone number must be 9 digits".tr;
                         return null;
                       },
                     ),
                     const SizedBox(height: 12),
                     CustomCheckoutField(
                       controller: _phone2,
-                      label: "Secondary Phone",
+                      label: "Secondary Phone".tr,
                       prefixText: "+962 ",
                       maxLength: 9,
                       validator: (val) {
                         if (val == null || val.isEmpty)
-                          return "Please enter your phone number";
+                          return "Please enter your phone number".tr;
                         if (val.length != 9)
-                          return "Phone number must be 9 digits";
+                          return "Phone number must be 9 digits".tr;
                         return null;
                       },
                     ),
 
                     const SizedBox(height: 20),
-                    _buildLabel("Order Quantity"),
+                    _buildLabel("Order Quantity".tr),
                     _buildQuantitySelector(),
 
                     const SizedBox(height: 20),
-                    _buildLabel("Shipping Details"),
+                    _buildLabel("Shipping Details".tr),
                     _buildCityDropdown(),
                     const SizedBox(height: 12),
                     CustomCheckoutField(
                       controller: _address,
-                      label: "Detailed Address",
+                      label: "Detailed Address".tr,
                       icon: Icons.location_on,
                     ),
 
@@ -146,7 +147,7 @@ class _CheckoutInvestmentPageState extends State<CheckoutInvestmentPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text("Number of items", style: TextStyle(color: Colors.grey)),
+          Text("Number of items".tr, style: TextStyle(color: Colors.grey)),
           Row(
             children: [
               _qtyBtn(
@@ -196,7 +197,7 @@ class _CheckoutInvestmentPageState extends State<CheckoutInvestmentPage> {
           border: InputBorder.none,
           prefixIcon: Icon(Icons.location_city, color: Colors.grey, size: 20),
         ),
-        hint: const Text("Select City", style: TextStyle(color: Colors.grey)),
+        hint: Text("Select City".tr, style: TextStyle(color: Colors.grey)),
         value: _selectedCity,
         items: _cities
             .map(
@@ -210,7 +211,7 @@ class _CheckoutInvestmentPageState extends State<CheckoutInvestmentPage> {
             )
             .toList(),
         onChanged: (val) => setState(() => _selectedCity = val),
-        validator: (val) => val == null ? "Please select a city" : null,
+        validator: (val) => val == null ? "Please select a city".tr : null,
       ),
     );
   }
@@ -259,8 +260,8 @@ class _CheckoutInvestmentPageState extends State<CheckoutInvestmentPage> {
                   setState(() => _isSubmitting = false);
                   if (success) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Order Placed Successfully!"),
+                      SnackBar(
+                        content: Text("Order Placed Successfully!".tr),
                       ),
                     );
                     Navigator.pop(context);
@@ -269,8 +270,8 @@ class _CheckoutInvestmentPageState extends State<CheckoutInvestmentPage> {
               },
         child: _isSubmitting
             ? const CircularProgressIndicator(color: Colors.white)
-            : const Text(
-                "Confirm Order",
+            : Text(
+                "Confirm Order".tr,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,

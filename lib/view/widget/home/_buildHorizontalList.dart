@@ -23,11 +23,20 @@ Widget buildHorizontalList(List list, {bool isCircle = false}) {
       itemBuilder: (context, i) {
         return GestureDetector(
           onTap: () {
+            if (list[i]['id'] == 6) {
+              Navigator.pushNamed(
+              context,
+              "/custom-order",
+            );
+            }else{
             Navigator.pushNamed(
               context,
               "/category",
               arguments: {"category": list[i]},
             );
+
+            }
+
           },
           child: Container(
             width: isCircle ? 90 : 120,
