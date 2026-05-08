@@ -7,8 +7,6 @@ import '../../core/functions/handling_data_controller.dart';
 import '../../data/datasource/remote/product/product_data.dart';
 import '../../core/class/crud.dart';
 import 'cart_controller.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
 
 class ProductDetailsController extends GetxController {
   ProductData productData = ProductData(Crud());
@@ -50,8 +48,8 @@ class ProductDetailsController extends GetxController {
         bool isAdded = response['action'] == "added";
 
         Get.snackbar(
-          "المفضلة",
-          isAdded ? "تمت الإضافة للمفضلة" : "تمت الإزالة من المفضلة",
+          "favorites".tr,
+          isAdded ? "Added to favorites".tr : "Removed from favorites".tr,
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: (isAdded ? Colors.green : Colors.red).withOpacity(
             0.4,
@@ -60,7 +58,7 @@ class ProductDetailsController extends GetxController {
         );
       }
     } else {
-      Get.snackbar("خطأ", "حدثت مشكلة في الاتصال");
+      Get.snackbar("Error".tr, "Connection error".tr);
     }
     update();
   }

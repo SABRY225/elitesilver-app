@@ -40,7 +40,6 @@ class HomeController extends GetxController {
 
   void startPolling() {
     _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
-      print("جاري تحديث البيانات تلقائياً...");
       getData(showLoading: false); 
     });
   }

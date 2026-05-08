@@ -23,7 +23,6 @@ class CheckoutController extends GetxController {
     super.onInit();
   }
 
-  // جلب المدن من الـ API
   void fetchCities() async {
     try {
       isLoading(true);

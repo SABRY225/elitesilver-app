@@ -20,7 +20,6 @@ class FavoriteController extends GetxController {
     statusRequest = StatusRequest.loading;
     update();
 
-    // 1. الحل السحري: تفريغ القائمة قبل إضافة البيانات الجديدة
     favoritesList.clear(); 
 
     final int? userId = LocalStorage.getUserId();
@@ -33,7 +32,6 @@ class FavoriteController extends GetxController {
       if (response['status'] == "success") {
         favoritesList.addAll(response['data']);
       } else {
-        // إذا لم توجد بيانات، نترك القائمة فارغة ونضع حالة failure أو success
         statusRequest = StatusRequest.failure;
       }
     }
@@ -41,18 +39,15 @@ class FavoriteController extends GetxController {
   }
 
   removeFromFavorite(String favId) async {
-    // 2. يفضل عدم جعل الشاشة كاملة "Loading" عند الحذف لتجربة مستخدم أفضل
-    // بل نكتفي بإظهار Snackbar أو مؤشر صغير
     var response = await favoriteData.removeData(favId);
 
     if (response['status'] == "success") {
-      Get.snackbar("المفضلة", "تم الحذف بنجاح", 
+      Get.snackbar("favorites".tr, "Deleted successfully".tr, 
           snackPosition: SnackPosition.BOTTOM);
       
-      // تحديث القائمة فوراً بعد الحذف الناجح
       getFavorites();
     } else {
-      Get.snackbar("خطأ", "فشل الحذف، حاول مرة أخرى");
+      Get.snackbar("Error".tr, "Deletion failed, please try again".tr);
     }
   }
 }

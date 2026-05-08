@@ -1,3 +1,4 @@
+import 'package:customer/data/datasource/remote/linkapi.dart';
 import '../../../core/class/crud.dart';
 
 class HomeData {
@@ -5,7 +6,7 @@ class HomeData {
   HomeData(this.crud);
 
   getData() async {
-    var response = await crud.getData("http://192.168.1.5:5000/api/home");
+    var response = await crud.getData("${AppLink.getHome}");
     return response.fold((l) => l, (r) => r);
   }
 }

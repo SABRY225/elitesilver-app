@@ -5,7 +5,6 @@ import '../../../core/class/status_request.dart';
 import '../../../core/functions/handling_data_controller.dart';
 import '../../../data/datasource/remote/auth/login_data.dart';
 import '../../../core/class/crud.dart';
-import '../../../view/screen/auth/otp_screen.dart';
 class LoginController extends GetxController {
   late TextEditingController email;
 
@@ -19,29 +18,22 @@ class LoginController extends GetxController {
     super.onInit();
   }
 
-  // دالة تسجيل الدخول
   login() async {
-    // 1. التحقق الأولي من الحقول
     if (email.text.isEmpty) {
-      return Get.snackbar("تنبيه", "يرجى إدخال البريد الإلكتروني");
+      return Get.snackbar("alert".tr, "Please enter your email address.".tr);
     }
 
-    // 2. تحديث الحالة إلى "تحميل"
     statusRequest = StatusRequest.loading;
     update();
-    // 3. إرسال الطلب للباك اند
     var response = await loginData.postData(email.text);
-    print("Response--: $response");
-
-    // 4. معالجة البيانات القادمة
     statusRequest = handlingData(response);
-    print("statusRequest--: $statusRequest");
+
     if (StatusRequest.success == statusRequest) {
       Get.offNamed(AppRoutes.otp, arguments: {"email": email.text});
     } else {
       Get.defaultDialog(
-        title: "فشل الدخول",
-        middleText: "البريد الإلكتروني غير مسجل لدينا",
+        title: "Login failed".tr,
+        middleText: "Email address not registered with us".tr,
         middleTextStyle: const TextStyle(color: Colors.white),
         backgroundColor: const Color(0xFF1A1A1A),
       );

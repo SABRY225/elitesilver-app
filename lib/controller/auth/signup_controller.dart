@@ -25,25 +25,20 @@ class SignUpController extends GetxController {
     super.onInit();
   }
 
-  // دالة تسجيل الدخول
   signUp() async {
-    // 1. التحقق الأولي من الحقول
     if (email.text.isEmpty) {
-      return Get.snackbar("تنبيه", "يرجى إدخال البريد الإلكتروني");
+      return Get.snackbar("alert".tr, "Please enter your email address.".tr);
     }
     if (phone.text.isEmpty) {
-      return Get.snackbar("تنبيه", "يرجى إدخال رقم الهاتف");
+      return Get.snackbar("alert".tr, "Please enter your phone number.".tr);
     }
     if (address.text.isEmpty) {
-      return Get.snackbar("تنبيه", "يرجى إدخال العنوان");
+      return Get.snackbar("alert".tr,"Please enter the address.".tr);
     }
 
-    // 2. تحديث الحالة إلى "تحميل"
     statusRequest = StatusRequest.loading;
     update();
-    // 3. إرسال الطلب للباك اند
     var response = await signupData.postData(name.text, email.text, phone.text, address.text);
-    // 4. معالجة البيانات القادمة
     statusRequest = handlingData(response);
     
     if (StatusRequest.success == statusRequest) {
@@ -52,8 +47,8 @@ class SignUpController extends GetxController {
         });
     }else {
         Get.defaultDialog(
-          title: "فشل الدخول",
-          middleText: "البريد الالكتروني مسجل لدينا بالفعل",
+          title: "Login failed".tr,
+          middleText: "The email address is already registered with us.".tr,
           middleTextStyle: const TextStyle(color: Colors.white),
           backgroundColor: const Color(0xFF1A1A1A),
         );

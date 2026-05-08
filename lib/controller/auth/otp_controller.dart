@@ -8,7 +8,6 @@ import '../../../core/class/crud.dart';
 import '../../core/services/local_storage.dart';
 
 class OtpController extends GetxController {
-  // 4 خانات OTP
   List<TextEditingController> otpControllers = List.generate(
     4,
     (index) => TextEditingController(),
@@ -18,18 +17,16 @@ class OtpController extends GetxController {
 
   StatusRequest statusRequest = StatusRequest.none;
 
-  // جمع الكود
   String get otpCode => otpControllers.map((e) => e.text).join();
 
   otp() async {
-    // التأكد من الكود
     if (otpCode.length < 4) {
-      return Get.snackbar("تنبيه", "أدخل رمز التحقق كامل");
+      return Get.snackbar("alert".tr, "Enter the complete verification code".tr);
     }
 
     var email = Get.arguments?["email"];
     if (email == null) {
-      Get.snackbar("Error", "Email not found");
+      Get.snackbar("Error".tr, "Email not found".tr);
       return;
     }
 
@@ -53,8 +50,8 @@ class OtpController extends GetxController {
       Get.offAllNamed(AppRoutes.home);
     } else {
       Get.defaultDialog(
-        title: "فشل الدخول",
-        middleText: "رمز التحقق غير صحيح",
+        title: "Login failed".tr,
+        middleText: "Verification code is invalid".tr,
         middleTextStyle: const TextStyle(color: Colors.white),
         backgroundColor: const Color(0xFF1A1A1A),
       );

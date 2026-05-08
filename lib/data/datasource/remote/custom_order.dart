@@ -24,12 +24,10 @@ class CustomOrder {
       request.files.add(
         await http.MultipartFile.fromPath('image', imageFile.path),
       );
-      print("request ---> ${request}");
       var response = await request.send();
 
       return response.statusCode == 201 || response.statusCode == 200;
     } catch (e) {
-      print("Error sending order: $e");
       return false;
     }
   }
