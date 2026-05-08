@@ -84,14 +84,13 @@ Widget _buildTextField({
 }) {
   return TextFormField(
     controller: controller,
-    keyboardType: TextInputType.phone, // لفتح لوحة أرقام الهاتف تلقائياً
+    keyboardType: TextInputType.phone, 
     style: const TextStyle(color: Colors.white),
     decoration: InputDecoration(
       hintText: hint,
       hintStyle: const TextStyle(color: Colors.grey, fontSize: 14),
       prefixIcon: Icon(icon, color: Colors.grey),
       
-      // إضافة مفتاح الدولة هنا
       prefix: hint == "phone_number".tr
           ? const Padding(
               padding: EdgeInsets.symmetric(horizontal: 8),
@@ -110,7 +109,7 @@ Widget _buildTextField({
       ),
       counterText: maxLength != null ? "char_limit".trParams({"limit": maxLength.toString()}): null, // عرض عدد الأحرف المتبقية
     ),
-    maxLength: maxLength, // تحديد الحد الأقصى لعدد الأحرف
+    maxLength: maxLength, 
   );
 }
 }

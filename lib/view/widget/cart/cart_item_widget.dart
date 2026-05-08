@@ -25,12 +25,11 @@ class CartItemWidget extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 🟣 صورة المنتج (Responsive)
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.network(
               image,
-              width: screenWidth * 0.22, // بدل 80
+              width: screenWidth * 0.22,
               height: screenWidth * 0.30,
               fit: BoxFit.cover,
             ),
@@ -38,7 +37,6 @@ class CartItemWidget extends StatelessWidget {
 
           const SizedBox(width: 10),
 
-          // 🟢 التفاصيل
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,9 +46,10 @@ class CartItemWidget extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
 
                 Text(
@@ -69,10 +68,11 @@ class CartItemWidget extends StatelessWidget {
 
                 const SizedBox(height: 8),
 
-                // 🔵 الكمية
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.05),
                     borderRadius: BorderRadius.circular(5),
@@ -80,32 +80,27 @@ class CartItemWidget extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.remove,
-                          color: Colors.white, size: 18),
+                      const Icon(Icons.remove, color: Colors.white, size: 18),
                       Padding(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 10),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
                           "$quantity",
                           style: const TextStyle(color: Colors.white),
                         ),
                       ),
-                      const Icon(Icons.add,
-                          color: Colors.white, size: 18),
+                      const Icon(Icons.add, color: Colors.white, size: 18),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),
 
-          // 🔴 زر الحذف
           SizedBox(
             width: 30,
             child: IconButton(
               padding: EdgeInsets.zero,
-              icon: const Icon(Icons.close,
-                  color: Colors.white, size: 20),
+              icon: const Icon(Icons.close, color: Colors.white, size: 20),
               onPressed: () {},
             ),
           ),

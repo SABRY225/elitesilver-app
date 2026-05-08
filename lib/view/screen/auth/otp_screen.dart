@@ -40,10 +40,9 @@ class OtpScreen extends StatelessWidget {
 
               const SizedBox(height: 50),
 
-              /// 🔥 OTP BOXES
               Directionality(
                 textDirection:
-                    TextDirection.ltr, // إجبار الاتجاه من اليسار لليمين
+                    TextDirection.ltr,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: List.generate(
@@ -56,7 +55,6 @@ class OtpScreen extends StatelessWidget {
 
               const SizedBox(height: 50),
 
-              /// 🔥 BUTTON
               SizedBox(
                 height: 55,
                 child: controller.statusRequest == StatusRequest.loading

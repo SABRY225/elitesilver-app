@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 Widget buildBottomNav(BuildContext context) {
-  // نقوم بتعريف الكنترولر هنا أو التأكد من أنه موجود مسبقاً
   Get.put(CartController());
 
   return GetBuilder<CartController>(
@@ -27,10 +26,10 @@ Widget buildBottomNav(BuildContext context) {
         BottomNavigationBarItem(
           icon: Badge(
             label: Text(
-              "${controller.cartCount}", // الرقم القادم من الكنترولر
+              "${controller.cartCount}",
               style: const TextStyle(color: Colors.white, fontSize: 10),
             ),
-            isLabelVisible: controller.cartCount > 0, // يختفي إذا كانت السلة فارغة
+            isLabelVisible: controller.cartCount > 0, 
             backgroundColor: Colors.orange,
             child: const Icon(Icons.shopping_cart_outlined),
           ),

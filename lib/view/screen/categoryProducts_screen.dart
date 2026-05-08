@@ -26,7 +26,6 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
 
   Future<void> _fetchProducts(dynamic categoryId) async {
     try {
-   
       final response = await http.get(
         Uri.parse('${AppLink.categories}/$categoryId'),
       );
@@ -71,7 +70,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
               child: Text(_error!, style: const TextStyle(color: Colors.grey)),
             )
           : _products.isEmpty
-          ?  Center(
+          ? Center(
               child: Text(
                 "No products in this category".tr,
                 style: TextStyle(color: Colors.grey),
@@ -141,7 +140,7 @@ class _CategoryProductsPageState extends State<CategoryProductsPage> {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    "${product['price']} "+"jod".tr,
+                    "${product['price']} " + "jod".tr,
                     style: const TextStyle(
                       color: Colors.blueAccent,
                       fontWeight: FontWeight.bold,

@@ -18,6 +18,7 @@ class AppLink {
   static const String getOrders ="$server/orders/mobile";
   static const String getProducts ="$server/products/mobile";
   static const String getHome ="$server/home";
+  static const String serach ="$server/products/search";
   static const String OrderAndPointByUser ="$server/home/orders-and-points";
   
   static const String favoriteView   = "$server/favorite/view";

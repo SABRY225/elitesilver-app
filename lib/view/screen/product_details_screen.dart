@@ -51,7 +51,7 @@ class ProductDetails extends StatelessWidget {
                             fit: StackFit.expand,
                             children: [
                               Image.network(
-                                '${baseUrl} /' + product['image'],
+                                '${baseUrl}/' + product['image'],
                                 fit: BoxFit.cover,
                               ),
                               const DecoratedBox(
@@ -71,14 +71,12 @@ class ProductDetails extends StatelessWidget {
                         ),
                       ),
 
-                      // 2. محتوى التفاصيل
                       SliverToBoxAdapter(
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // الاسم والسعر
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -161,7 +159,6 @@ class ProductDetails extends StatelessWidget {
                                 const SizedBox(height: 25),
                               ],
 
-                              // المواصفات الفنية (بشكل Grid أو Cards)
                               Text(
                                 "Specifications".tr,
                                 style: TextStyle(
@@ -211,7 +208,7 @@ class ProductDetails extends StatelessWidget {
                               ),
                               const SizedBox(
                                 height: 50,
-                              ), // مسافة إضافية للتمرير
+                              ), 
                             ],
                           ),
                         ),
@@ -247,19 +244,18 @@ class ProductDetails extends StatelessWidget {
     );
   }
 
-  // ودجت بناء شريحة المواصفات
   Widget _buildSpecChip(String label, String value, IconData icon) {
     return Container(
-      width: Get.width * 0.28, // بيخلي 3 جنب بعض بشكل متناسق
+      width: Get.width * 0.28, 
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: const Color(
           0xFF1E1E1E,
-        ), // لون خلفية أفتح قليلاً من الخلفية الأساسية
+        ),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: Colors.white.withOpacity(0.05),
-        ), // فريم خفيف جداً
+        ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
@@ -271,7 +267,6 @@ class ProductDetails extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // الأيقونة بشكل دائري خلفها لون خفيف
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
@@ -281,7 +276,6 @@ class ProductDetails extends StatelessWidget {
             child: Icon(icon, color: Colors.orange, size: 20),
           ),
           const SizedBox(height: 10),
-          // اسم الخاصية
           Text(
             label,
             style: TextStyle(
@@ -292,7 +286,6 @@ class ProductDetails extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 4),
-          // القيمة
           Text(
             value,
             textAlign: TextAlign.center,
@@ -307,7 +300,6 @@ class ProductDetails extends StatelessWidget {
     );
   }
 
-  // ودجت أزرار الأكشن (السلة والمفضلة)
   Widget _buildBottomAction(BuildContext context) {
     ProductDetailsController controller = Get.find();
     CartController controllerCart = Get.find();
@@ -355,7 +347,6 @@ class ProductDetails extends StatelessWidget {
             },
           ),
           const SizedBox(width: 15),
-          // زر إضافة للسلة
           Expanded(
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(

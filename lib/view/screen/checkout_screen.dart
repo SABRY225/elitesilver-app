@@ -15,14 +15,19 @@ class CheckoutScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text("checkout".tr, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+        title: Text(
+          "checkout".tr,
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
         backgroundColor: Colors.black,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator(color: Colors.orange));
+          return const Center(
+            child: CircularProgressIndicator(color: Colors.orange),
+          );
         }
         return Stack(
           children: [
@@ -34,41 +39,49 @@ class CheckoutScreen extends StatelessWidget {
                   _buildSectionTitle("CONTACT INFORMATION".tr),
                   _phoneField("Primary Phone".tr, controller.phoneController),
                   const SizedBox(height: 12),
-                  _phoneField("Secondary Phone (Optional)".tr, controller.phone2Controller),
-                  
+                  _phoneField(
+                    "Secondary Phone (Optional)".tr,
+                    controller.phone2Controller,
+                  ),
+
                   const SizedBox(height: 30),
                   _buildSectionTitle("SHIPPING ADDRESS".tr),
                   _buildCityDropdown(controller),
                   const SizedBox(height: 12),
-                  _customTextField("Address Details (Building, Street...)".tr, 
-                      controller.addressDetailsController, Icons.map, TextInputType.multiline),
+                  _customTextField(
+                    "Address Details (Building, Street...)".tr,
+                    controller.addressDetailsController,
+                    Icons.map,
+                    TextInputType.multiline,
+                  ),
 
                   const SizedBox(height: 30),
-                  // ابحث عن الجزء الخاص بـ PAYMENT METHOD واستبدله بهذا:
-_buildSectionTitle("PAYMENT METHOD".tr),
-Obx(() => Column(
-  children: [
-    _paymentOption(
-      "Cash on Delivery".tr, 
-      controller.selectedPaymentMethod.value == "cash", 
-      Icons.money,
-      () => controller.selectedPaymentMethod.value = "cash",
-    ),
-    _paymentOption(
-      "Pay My Points".tr, 
-      controller.selectedPaymentMethod.value == "points", 
-      Icons.radio_button_checked_sharp,
-      () => controller.selectedPaymentMethod.value = "points",
-    ),
-    // خيار البطاقة يبقى غير مفعل حالياً كما في كودك
-    _paymentOption(
-      "Credit Card (Soon)".tr, 
-      false, 
-      Icons.credit_card,
-      null, // لا يمكن الضغط عليه
-    ),
-  ],
-)),
+                  _buildSectionTitle("PAYMENT METHOD".tr),
+                  Obx(
+                    () => Column(
+                      children: [
+                        _paymentOption(
+                          "Cash on Delivery".tr,
+                          controller.selectedPaymentMethod.value == "cash",
+                          Icons.money,
+                          () => controller.selectedPaymentMethod.value = "cash",
+                        ),
+                        _paymentOption(
+                          "Pay My Points".tr,
+                          controller.selectedPaymentMethod.value == "points",
+                          Icons.radio_button_checked_sharp,
+                          () =>
+                              controller.selectedPaymentMethod.value = "points",
+                        ),
+                        _paymentOption(
+                          "Credit Card (Soon)".tr,
+                          false,
+                          Icons.credit_card,
+                          null, 
+                        ),
+                      ],
+                    ),
+                  ),
 
                   const SizedBox(height: 30),
                   _buildOrderSummary(cartController, controller),
@@ -83,31 +96,41 @@ Obx(() => Column(
     );
   }
 
-  // حقل الهاتف الأردني
   Widget _phoneField(String hint, TextEditingController ctr) {
     return TextField(
       controller: ctr,
       keyboardType: TextInputType.phone,
       style: const TextStyle(color: Colors.white),
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(9)],
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+        LengthLimitingTextInputFormatter(9),
+      ],
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: const TextStyle(color: Colors.grey, fontSize: 14),
         prefixIcon: Container(
           width: 80,
           alignment: Alignment.center,
-          child: const Text("+962", style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold)),
+          child: const Text(
+            "+962",
+            style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold),
+          ),
         ),
         filled: true,
         fillColor: const Color(0xFF1A1A1A),
-        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: BorderSide.none),
-        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Colors.orange)),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: Colors.orange),
+        ),
       ),
     );
   }
 
-  // اختيار المدينة
-Widget _buildCityDropdown(CheckoutController controller) {
+  Widget _buildCityDropdown(CheckoutController controller) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 4),
       decoration: BoxDecoration(
@@ -117,15 +140,22 @@ Widget _buildCityDropdown(CheckoutController controller) {
       child: DropdownButtonHideUnderline(
         child: DropdownButton<dynamic>(
           dropdownColor: const Color(0xFF1A1A1A),
-          hint: Text("Select Your City".tr, style: TextStyle(color: Colors.grey, fontSize: 14)),
-          value: controller.selectedCity.isEmpty ? null : controller.selectedCity.value,
+          hint: Text(
+            "Select Your City".tr,
+            style: TextStyle(color: Colors.grey, fontSize: 14),
+          ),
+          value: controller.selectedCity.isEmpty
+              ? null
+              : controller.selectedCity.value,
           isExpanded: true,
           icon: const Icon(Icons.expand_more, color: Colors.orange),
           items: controller.cities.map((city) {
             return DropdownMenuItem(
               value: city,
-              child: Text("${city['name']} (+${city['price']} )"+"jod".tr, 
-                style: const TextStyle(color: Colors.white)),
+              child: Text(
+                "${city['name']} (+${city['price']} )" + "jod".tr,
+                style: const TextStyle(color: Colors.white),
+              ),
             );
           }).toList(),
           onChanged: (val) => controller.selectedCity.value = val,
@@ -134,22 +164,44 @@ Widget _buildCityDropdown(CheckoutController controller) {
     );
   }
 
-  // ملخص الحساب
   Widget _buildOrderSummary(CartController cart, CheckoutController checkout) {
     return Container(
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(color: const Color(0xFF1A1A1A), borderRadius: BorderRadius.circular(15)),
+      decoration: BoxDecoration(
+        color: const Color(0xFF1A1A1A),
+        borderRadius: BorderRadius.circular(15),
+      ),
       child: Column(
         children: [
-          _summaryRow("Subtotal".tr, "${cart.total.toStringAsFixed(2)} "+"jod".tr),
-          _summaryRow("Shipping Fee".tr, "${checkout.shippingCost.toStringAsFixed(2)} "+"jod".tr),
+          _summaryRow(
+            "Subtotal".tr,
+            "${cart.total.toStringAsFixed(2)} " + "jod".tr,
+          ),
+          _summaryRow(
+            "Shipping Fee".tr,
+            "${checkout.shippingCost.toStringAsFixed(2)} " + "jod".tr,
+          ),
           const Divider(color: Colors.white10, height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("total".tr, style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
-              Text("${(cart.total + checkout.shippingCost).toStringAsFixed(2)} "+"jod".tr, 
-                  style: const TextStyle(color: Colors.orange, fontSize: 20, fontWeight: FontWeight.bold)),
+              Text(
+                "total".tr,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                "${(cart.total + checkout.shippingCost).toStringAsFixed(2)} " +
+                    "jod".tr,
+                style: const TextStyle(
+                  color: Colors.orange,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
           ),
         ],
@@ -157,14 +209,20 @@ Widget _buildCityDropdown(CheckoutController controller) {
     );
   }
 
-  // زر التأكيد الثابت في الأسفل
-  Widget _buildBottomAction(CartController cart, CheckoutController controller) {
+  Widget _buildBottomAction(
+    CartController cart,
+    CheckoutController controller,
+  ) {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Colors.black.withOpacity(0), Colors.black]),
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.black.withOpacity(0), Colors.black],
+          ),
         ),
         child: SizedBox(
           width: double.infinity,
@@ -172,14 +230,23 @@ Widget _buildCityDropdown(CheckoutController controller) {
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange,
               padding: const EdgeInsets.all(18),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
             ),
-            onPressed: controller.isSubmitting.value 
-              ? null 
-              : () => _validateAndSubmit(cart, controller),
+            onPressed: controller.isSubmitting.value
+                ? null
+                : () => _validateAndSubmit(cart, controller),
             child: controller.isSubmitting.value
-              ? const CircularProgressIndicator(color: Colors.black)
-              : Text("CONFIRM ORDER".tr, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16)),
+                ? const CircularProgressIndicator(color: Colors.black)
+                : Text(
+                    "CONFIRM ORDER".tr,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
           ),
         ),
       ),
@@ -188,35 +255,88 @@ Widget _buildCityDropdown(CheckoutController controller) {
 
   void _validateAndSubmit(CartController cart, CheckoutController controller) {
     if (controller.phoneController.text.length < 9) {
-      Get.snackbar("Required".tr, "Please enter a valid phone number".tr, backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar(
+        "Required".tr,
+        "Please enter a valid phone number".tr,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } else if (controller.selectedCity.isEmpty) {
-      Get.snackbar("Required".tr, "Please select a shipping city".tr, backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar(
+        "Required".tr,
+        "Please select a shipping city".tr,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } else if (controller.addressDetailsController.text.isEmpty) {
-      Get.snackbar("Required".tr, "Please enter your address details".tr, backgroundColor: Colors.red, colorText: Colors.white);
+      Get.snackbar(
+        "Required".tr,
+        "Please enter your address details".tr,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     } else {
       controller.placeOrder(cart);
     }
   }
 
-  // Helper Widgets
   Widget _buildSectionTitle(String title) => Padding(
     padding: const EdgeInsets.only(bottom: 12),
-    child: Text(title, style: const TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold, letterSpacing: 1.1)),
+    child: Text(
+      title,
+      style: const TextStyle(
+        color: Colors.grey,
+        fontSize: 12,
+        fontWeight: FontWeight.bold,
+        letterSpacing: 1.1,
+      ),
+    ),
   );
 
-  Widget _customTextField(String hint, TextEditingController ctr, IconData icon, TextInputType type) => TextField(
-    controller: ctr, keyboardType: type, style: const TextStyle(color: Colors.white), maxLines: type == TextInputType.multiline ? 3 : 1,
-    decoration: InputDecoration(hintText: hint, hintStyle: const TextStyle(color: Colors.grey, fontSize: 14), prefixIcon: Icon(icon, color: Colors.orange, size: 20),
-      filled: true, fillColor: const Color(0xFF1A1A1A), enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: BorderSide.none),
-      focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Colors.orange))),
+  Widget _customTextField(
+    String hint,
+    TextEditingController ctr,
+    IconData icon,
+    TextInputType type,
+  ) => TextField(
+    controller: ctr,
+    keyboardType: type,
+    style: const TextStyle(color: Colors.white),
+    maxLines: type == TextInputType.multiline ? 3 : 1,
+    decoration: InputDecoration(
+      hintText: hint,
+      hintStyle: const TextStyle(color: Colors.grey, fontSize: 14),
+      prefixIcon: Icon(icon, color: Colors.orange, size: 20),
+      filled: true,
+      fillColor: const Color(0xFF1A1A1A),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: BorderSide.none,
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: const BorderSide(color: Colors.orange),
+      ),
+    ),
   );
 
   Widget _summaryRow(String label, String value) => Padding(
     padding: const EdgeInsets.symmetric(vertical: 4),
-    child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [Text(label, style: const TextStyle(color: Colors.grey)), Text(value, style: const TextStyle(color: Colors.white))]),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(label, style: const TextStyle(color: Colors.grey)),
+        Text(value, style: const TextStyle(color: Colors.white)),
+      ],
+    ),
   );
 
-Widget _paymentOption(String title, bool active, IconData icon, VoidCallback? onTap) => GestureDetector(
+  Widget _paymentOption(
+    String title,
+    bool active,
+    IconData icon,
+    VoidCallback? onTap,
+  ) => GestureDetector(
     onTap: onTap,
     child: Container(
       margin: const EdgeInsets.only(bottom: 10),
@@ -230,9 +350,13 @@ Widget _paymentOption(String title, bool active, IconData icon, VoidCallback? on
         children: [
           Icon(icon, color: active ? Colors.orange : Colors.grey),
           const SizedBox(width: 15),
-          Text(title, style: TextStyle(color: active ? Colors.white : Colors.grey)),
+          Text(
+            title,
+            style: TextStyle(color: active ? Colors.white : Colors.grey),
+          ),
           const Spacer(),
-          if (active) const Icon(Icons.check_circle, color: Colors.orange, size: 20)
+          if (active)
+            const Icon(Icons.check_circle, color: Colors.orange, size: 20),
         ],
       ),
     ),

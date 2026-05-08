@@ -1,4 +1,6 @@
+import 'package:customer/data/datasource/remote/linkapi.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
@@ -14,7 +16,6 @@ class _SearchScreenState extends State<SearchScreen> {
   List _results = [];
   bool _isLoading = false;
 
-  // دالة البحث من الـ API
   Future<void> _onSearch(String query) async {
     if (query.isEmpty) {
       setState(() => _results = []);
@@ -24,9 +25,8 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() => _isLoading = true);
 
     try {
-      // إرسال كويري q للـ Backend
       final response = await http.get(
-        Uri.parse("http://192.168.1.5:5000/api/products/search?q=$query"),
+        Uri.parse("${AppLink.serach}?q=$query"),
       );
 
       if (response.statusCode == 200) {
@@ -37,7 +37,6 @@ class _SearchScreenState extends State<SearchScreen> {
       }
     } catch (e) {
       setState(() => _isLoading = false);
-      debugPrint("Search error: $e");
     }
   }
 
@@ -50,10 +49,10 @@ class _SearchScreenState extends State<SearchScreen> {
         elevation: 0,
         title: TextField(
           controller: _searchController,
-          onChanged: _onSearch, // البحث المباشر أثناء الكتابة
+          onChanged: _onSearch,
           style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
-            hintText: "Search for jewelry...",
+            hintText: "Search for jewelry...".tr,
             hintStyle: const TextStyle(color: Colors.grey),
             prefixIcon: const Icon(Icons.search, color: Colors.blueAccent),
             suffixIcon: _searchController.text.isNotEmpty
@@ -94,8 +93,8 @@ class _SearchScreenState extends State<SearchScreen> {
           const SizedBox(height: 10),
           Text(
             _searchController.text.isEmpty
-                ? "Start typing to search"
-                : "No products found",
+                ? "Start typing to search".tr
+                : "No products found".tr,
             style: const TextStyle(color: Colors.grey),
           ),
         ],
@@ -136,7 +135,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       top: Radius.circular(12),
                     ),
                     child: Image.network(
-                      "http://192.168.1.5:5000/${product['image']}",
+                      "${AppLink.imagesStatic}/${product['image']}",
                       fit: BoxFit.cover,
                       width: double.infinity,
                       errorBuilder: (context, error, stackTrace) =>
@@ -160,7 +159,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        "${product['price']} JOD",
+                        "${product['price']} "+"jod".tr,
                         style: const TextStyle(
                           color: Colors.blueAccent,
                           fontSize: 13,

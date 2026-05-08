@@ -1,3 +1,4 @@
+import 'package:customer/data/datasource/remote/linkapi.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,12 +14,11 @@ Widget buildHorizontalList(List list, {bool isCircle = false}) {
   }
 
   return SizedBox(
-    // زيادة الارتفاع قليلاً لاستيعاب الظلال والنصوص بشكل مريح
     height: isCircle ? 140 : 170,
     child: ListView.builder(
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      physics: const BouncingScrollPhysics(), // إضافة تأثير ارتداد احترافي
+      physics: const BouncingScrollPhysics(), 
       itemCount: list.length,
       itemBuilder: (context, i) {
         return GestureDetector(
@@ -44,7 +44,6 @@ Widget buildHorizontalList(List list, {bool isCircle = false}) {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // تصميم حاوية الصورة
                 Container(
                   decoration: BoxDecoration(
                     shape: isCircle ? BoxShape.circle : BoxShape.rectangle,
@@ -62,11 +61,10 @@ Widget buildHorizontalList(List list, {bool isCircle = false}) {
                         ? BorderRadius.circular(50)
                         : BorderRadius.circular(15),
                     child: Image.network(
-                      'http://192.168.1.5:5000/${list[i]['image_url']}',
+                      '${AppLink.imagesStatic}/${list[i]['image_url']}',
                       fit: BoxFit.cover,
                       width: isCircle ? 85 : 120,
                       height: isCircle ? 85 : 110,
-                      // إضافة Loading placeholder أثناء تحميل الصورة
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
                         return Container(
@@ -78,7 +76,6 @@ Widget buildHorizontalList(List list, {bool isCircle = false}) {
                           ),
                         );
                       },
-                      // التعامل مع الأخطاء
                       errorBuilder: (context, error, stackTrace) => Container(
                         width: isCircle ? 85 : 120,
                         height: isCircle ? 85 : 110,
@@ -92,7 +89,6 @@ Widget buildHorizontalList(List list, {bool isCircle = false}) {
                   ),
                 ),
                 const SizedBox(height: 10),
-                // النص مع تحسين العرض
                 Text(
                   list[i]['name'],
                   textAlign: TextAlign.center,

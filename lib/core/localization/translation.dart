@@ -138,7 +138,16 @@ class MyTranslations extends Translations {
       "Please enter your phone number.": "Please enter your phone number.",
       "Please enter the address.": "Please enter the address.",
       "The email address is already registered with us.":
-          "The email address is already registered with us.",
+      "The email address is already registered with us.",
+      "Search for jewelry...":"Search for jewelry...",
+      "Start typing to search":"Start typing to search",
+      "No products found":"No products found",
+
+
+
+
+
+
     },
     "ar": {
       "no_internet_connection": "لا يوجد اتصال بالإنترنت",
@@ -276,6 +285,9 @@ class MyTranslations extends Translations {
       "Please enter the address.": "يرجى إدخال العنوان",
       "The email address is already registered with us.":
           "البريد الالكتروني مسجل لدينا بالفعل",
+      "Search for jewelry...":"ابحث عن المجوهرات...",
+      "Start typing to search":"ابدأ الكتابة للبحث",
+      "No products found":"لم يتم العثور على منتجات"
     },
   };
 }

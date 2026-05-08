@@ -12,17 +12,19 @@ class LanguageScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // 1. خلفية متدرجة فخمة
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [Color(0xFF000000), Color(0xFF1A1A1A), Color(0xFF000000)],
+                colors: [
+                  Color(0xFF000000),
+                  Color(0xFF1A1A1A),
+                  Color(0xFF000000),
+                ],
               ),
             ),
           ),
-          // 2. دوائر ضوئية خافتة (Ambient Light) خلف المحتوى
           Positioned(
             top: -100,
             right: -100,
@@ -35,32 +37,38 @@ class LanguageScreen extends StatelessWidget {
               ),
             ),
           ),
-          
+
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // شعار مودرن بتأثير نيون خفيف
                   Container(
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(color: Colors.orange.withOpacity(0.5), width: 1),
+                      border: Border.all(
+                        color: Colors.orange.withOpacity(0.5),
+                        width: 1,
+                      ),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.orange.withOpacity(0.1),
                           blurRadius: 40,
                           spreadRadius: 10,
-                        )
+                        ),
                       ],
                     ),
-                    child: const Icon(Icons.language_rounded, size: 70, color: Colors.orange),
+                    child: const Icon(
+                      Icons.language_rounded,
+                      size: 70,
+                      color: Colors.orange,
+                    ),
                   ),
-                  
+
                   const SizedBox(height: 40),
-                  
+
                   const Text(
                     "Select Language",
                     style: TextStyle(
@@ -72,15 +80,11 @@ class LanguageScreen extends StatelessWidget {
                   ),
                   Text(
                     "اختر اللغة المناسبة للتطبيق",
-                    style: TextStyle(
-                      color: Colors.grey.shade500,
-                      fontSize: 16,
-                    ),
+                    style: TextStyle(color: Colors.grey.shade500, fontSize: 16),
                   ),
-                  
+
                   const SizedBox(height: 60),
 
-                  // زر اللغة العربية
                   _buildModernButton(
                     title: "العربية",
                     subtitle: "Arabic Language",
@@ -90,7 +94,6 @@ class LanguageScreen extends StatelessWidget {
 
                   const SizedBox(height: 20),
 
-                  // زر اللغة الإنجليزية
                   _buildModernButton(
                     title: "English",
                     subtitle: "English Language",
@@ -106,7 +109,6 @@ class LanguageScreen extends StatelessWidget {
     );
   }
 
-  // ويدجت زر احترافي بتصميم "Card"
   Widget _buildModernButton({
     required String title,
     required String subtitle,
@@ -119,20 +121,21 @@ class LanguageScreen extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         decoration: BoxDecoration(
-          color: const Color(0xFF252525), // لون داكن مريح
+          color: const Color(0xFF252525), 
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.white.withOpacity(0.05)), // حواف ناعمة جداً
+          border: Border.all(
+            color: Colors.white.withOpacity(0.05),
+          ), 
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.3),
               blurRadius: 10,
               offset: const Offset(0, 5),
-            )
+            ),
           ],
         ),
         child: Row(
           children: [
-            // أيقونة دائرية صغيرة
             Container(
               height: 50,
               width: 50,
@@ -144,7 +147,6 @@ class LanguageScreen extends StatelessWidget {
               child: Text(icon, style: const TextStyle(fontSize: 24)),
             ),
             const SizedBox(width: 20),
-            // نصوص الزر
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -163,7 +165,11 @@ class LanguageScreen extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            Icon(Icons.arrow_forward_ios_rounded, color: Colors.orange.shade300, size: 18),
+            Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: Colors.orange.shade300,
+              size: 18,
+            ),
           ],
         ),
       ),

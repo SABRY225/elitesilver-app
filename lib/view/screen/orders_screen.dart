@@ -8,7 +8,6 @@ class OrdersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // التأكد من تهيئة الكنترولر
     Get.put(OrderController());
 
     return Scaffold(
@@ -24,24 +23,18 @@ class OrdersScreen extends StatelessWidget {
       ),
       body: GetBuilder<OrderController>(
         builder: (controller) {
-          // 1. معالجة حالة التحميل
           if (controller.statusRequest == StatusRequest.loading) {
             return const Center(
               child: CircularProgressIndicator(color: Colors.orange),
             );
-          }
-          // 2. معالجة أخطاء الاتصال أو السيرفر
-          else if (controller.statusRequest == StatusRequest.offlinefailure) {
+          } else if (controller.statusRequest == StatusRequest.offlinefailure) {
             return _buildErrorState(
               "no_internet_connection".tr,
               Icons.wifi_off_rounded,
             );
           } else if (controller.statusRequest == StatusRequest.serverfailure) {
             return _buildErrorState("server_error".tr, Icons.dns_rounded);
-          }
-          // 3. حالة النجاح
-          else {
-            // حماية في حال كانت القائمة null أو فارغة
+          } else {
             if (controller.orders.isEmpty) {
               return _buildErrorState(
                 "No orders currently available".tr,
@@ -53,7 +46,6 @@ class OrdersScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               itemCount: controller.orders.length,
               itemBuilder: (context, index) {
-                // التأكد من أن العنصر ليس null قبل بناء الكارد
                 if (controller.orders[index] == null) return const SizedBox();
                 return _buildOrderCard(controller.orders[index]);
               },
@@ -64,12 +56,9 @@ class OrdersScreen extends StatelessWidget {
     );
   }
 
-  /// ودجت الكارد المطور مع حماية من الـ Null
   Widget _buildOrderCard(Map? order) {
     if (order == null) return const SizedBox();
 
-    // 1. استخراج البيانات بناءً على هيكلة الـ JSON المرفق
-    // ملاحظة: إذا لم يتوفر ID في الـ JSON، يمكن استخدام حقل آخر أو الـ index
     String type = order['type'] ?? "عام";
     String total = order['total']?.toString() ?? "0";
     String status = order['status'] ?? "غير محدد";
@@ -100,7 +89,6 @@ class OrdersScreen extends StatelessWidget {
       city = order['city']['name'] ?? "مدينة غير معروفة";
     }
 
-    // الوصول لاسم المنتج الأول من مصفوفة items
     String itemName = "طلب فارغ";
     if (order['items'] != null && (order['items'] as List).isNotEmpty) {
       itemName = order['items'][0]['name'] ?? "منتج بدون اسم";
@@ -121,7 +109,6 @@ class OrdersScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// الجزء العلوي: النوع والسعر
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -146,7 +133,7 @@ class OrdersScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                total + " " + "jod".tr,
+                '${total} ' + "jod".tr,
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -161,7 +148,6 @@ class OrdersScreen extends StatelessWidget {
             child: Divider(color: Colors.white10, thickness: 1),
           ),
 
-          /// معلومات المنتج والمدينة
           _buildInfoRow(
             Icons.shopping_bag_outlined,
             itemName,
@@ -176,7 +162,6 @@ class OrdersScreen extends StatelessWidget {
           ),
           const SizedBox(height: 12),
 
-          /// المدينة والحالة
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -188,7 +173,6 @@ class OrdersScreen extends StatelessWidget {
                 ),
               ),
 
-              // كبسولة الحالة
               Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 12,
@@ -214,7 +198,6 @@ class OrdersScreen extends StatelessWidget {
     );
   }
 
-  /// ودجت الصف مضاف له Expanded لمنع أخطاء الـ Rendering
   Widget _buildInfoRow(
     IconData icon,
     String text,
@@ -227,7 +210,6 @@ class OrdersScreen extends StatelessWidget {
         Icon(icon, color: isBold ? Colors.orange : Colors.white38, size: 18),
         const SizedBox(width: 8),
         Expanded(
-          // يمنع الخطأ RenderBox was not laid out
           child: Text(
             text,
             style: TextStyle(
@@ -243,7 +225,6 @@ class OrdersScreen extends StatelessWidget {
     );
   }
 
-  /// شاشة عرض الأخطاء
   Widget _buildErrorState(String message, IconData icon) {
     return Center(
       child: Column(

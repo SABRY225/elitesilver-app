@@ -7,11 +7,11 @@ import '../../routes.dart';
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
-@override
+  @override
   Widget build(BuildContext context) {
     final controller = Get.put(ProfileController());
     Future.microtask(() => controller.fetchProfileData());
-    final name = LocalStorage.getName() ?? "user".tr; // تعريب كلمة User لو مش موجودة
+    final name = LocalStorage.getName() ?? "user".tr;
 
     return Scaffold(
       backgroundColor: const Color(0xFF0D0D0D),
@@ -49,27 +49,27 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            Obx(() => Container(
-              margin: const EdgeInsets.symmetric(horizontal: 30),
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.05),
-                borderRadius: BorderRadius.circular(25),
+            Obx(
+              () => Container(
+                margin: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.05),
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _buildStatItem("points".tr, controller.points.value),
+                    Container(width: 1, height: 40, color: Colors.white10),
+                    _buildStatItem(
+                      "orders_count".tr,
+                      controller.orderCounter.value,
+                    ),
+                  ],
+                ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  // استخدام مفاتيح الترجمة هنا
-                  _buildStatItem("points".tr, controller.points.value),
-                  Container(
-                    width: 1,
-                    height: 40,
-                    color: Colors.white10,
-                  ),
-                  _buildStatItem("orders_count".tr, controller.orderCounter.value),
-                ],
-              ),
-            )),
+            ),
             const SizedBox(height: 30),
             Expanded(
               child: Container(
@@ -93,12 +93,15 @@ class ProfileScreen extends StatelessWidget {
                       onTap: () => Get.toNamed(AppRoutes.cart),
                     ),
                     _buildListTile(
-                      icon: Icons.language, // غيرت الأيقونة لتكون أنسب للغة
+                      icon: Icons.language, 
                       title: "app_language".tr,
                       onTap: () => Get.toNamed(AppRoutes.selectLanguage),
                     ),
                     const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
                       child: Divider(color: Colors.white10, thickness: 1),
                     ),
                     _buildListTile(
@@ -119,7 +122,7 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
-  // ويدجت بناء العنصر الإحصائي
+
   Widget _buildStatItem(String label, String value) {
     return Column(
       children: [
@@ -144,7 +147,6 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  // ويدجت بناء عنصر القائمة
   Widget _buildListTile({
     required IconData icon,
     required String title,

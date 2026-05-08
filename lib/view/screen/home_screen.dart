@@ -13,7 +13,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // تهيئة المتحكم
     Get.put(HomeController());
 
     return Scaffold(
@@ -35,7 +34,6 @@ class HomeScreen extends StatelessWidget {
       ),
       body: GetBuilder<HomeController>(
         builder: (controller) {
-          // معالجة حالات الطلب (تحميل، خطأ، نجاح)
           if (controller.statusRequest == StatusRequest.loading) {
             return const Center(child: CircularProgressIndicator(color: Colors.white));
           } else if (controller.statusRequest == StatusRequest.offlinefailure) {
@@ -47,18 +45,14 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // 1. Hero Section (Banner)
                   HeroSliderSection(),
 
-                  // 2. قسم استثمار الفضة
                   buildSectionTitle("silver_investment".tr),
                   buildInvestmentGrid(controller.investmentProducts),
 
-                  // 3. قسم الفئات
                   buildSectionTitle("categories".tr),
                   buildHorizontalList(controller.categories, isCircle: true),
 
-                  // 4. قسم المنتجات (Grid)
                   buildSectionTitle("products".tr),
                   buildProductsGrid(controller.products),
                   

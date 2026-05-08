@@ -13,7 +13,6 @@ class _HeroSliderSectionState extends State<HeroSliderSection> {
   int _currentPage = 0;
   late Timer _timer;
 
-  // قائمة الصور (يمكنك استبدالها بروابط من السيرفر أو Assets)
   final List<String> images = [
     "assets/images/hero_ring.png",
     "assets/images/hero_ring4.png",
@@ -27,7 +26,6 @@ class _HeroSliderSectionState extends State<HeroSliderSection> {
     super.initState();
     _pageController = PageController(initialPage: 0);
 
-    // إعداد التايمر لتقليب الصور كل ثانيتين
     _timer = Timer.periodic(const Duration(seconds: 2), (Timer timer) {
       if (_currentPage < images.length - 1) {
         _currentPage++;
@@ -38,8 +36,8 @@ class _HeroSliderSectionState extends State<HeroSliderSection> {
       if (_pageController.hasClients) {
         _pageController.animateToPage(
           _currentPage,
-          duration: const Duration(milliseconds: 800), // سرعة الانزلاق
-          curve: Curves.easeInOut, // حركة ناعمة
+          duration: const Duration(milliseconds: 800), 
+          curve: Curves.easeInOut, 
         );
       }
     });
@@ -47,7 +45,7 @@ class _HeroSliderSectionState extends State<HeroSliderSection> {
 
   @override
   void dispose() {
-    _timer.cancel(); // إلغاء التايمر عند إغلاق الصفحة لمنع تسريب الذاكرة
+    _timer.cancel();
     _pageController.dispose();
     super.dispose();
   }
@@ -59,7 +57,6 @@ class _HeroSliderSectionState extends State<HeroSliderSection> {
       width: double.infinity,
       child: Stack(
         children: [
-          // 1. سلايدر الصور
           PageView.builder(
             controller: _pageController,
             itemCount: images.length,
@@ -77,8 +74,7 @@ class _HeroSliderSectionState extends State<HeroSliderSection> {
             },
           ),
 
-          // 2. الطبقة المتدرجة (Gradient Overlay) لجمالية التصميم
-          IgnorePointer( // لجعل اللمس يمر من خلالها للسلايدر
+          IgnorePointer( 
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -94,7 +90,6 @@ class _HeroSliderSectionState extends State<HeroSliderSection> {
             ),
           ),
 
-          // 3. مؤشرات الصفحات (Dots Indicator) - اختيارية
           Positioned(
             bottom: 20,
             left: 0,
@@ -107,7 +102,7 @@ class _HeroSliderSectionState extends State<HeroSliderSection> {
                   duration: const Duration(milliseconds: 300),
                   margin: const EdgeInsets.symmetric(horizontal: 4),
                   height: 8,
-                  width: _currentPage == index ? 24 : 8, // تطويل النقطة النشطة
+                  width: _currentPage == index ? 24 : 8, 
                   decoration: BoxDecoration(
                     color: _currentPage == index ? Colors.orange : Colors.white54,
                     borderRadius: BorderRadius.circular(10),

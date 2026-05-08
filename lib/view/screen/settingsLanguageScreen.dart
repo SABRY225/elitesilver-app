@@ -7,7 +7,6 @@ class SettingsLanguageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // نستخدم الكنترولر الموجود بالفعل
     final LocaleController controller = Get.find();
 
     return Scaffold(
@@ -27,12 +26,11 @@ class SettingsLanguageScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "choose_preferred_lang".tr, // أضف هذا المفتاح للقاموس
+              "choose_preferred_lang".tr, 
               style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 14),
             ),
             const SizedBox(height: 25),
             
-            // اختيار اللغة العربية
             _buildLanguageCard(
               title: "العربية",
               subtitle: "Arabic",
@@ -43,7 +41,6 @@ class SettingsLanguageScreen extends StatelessWidget {
             
             const SizedBox(height: 15),
             
-            // اختيار اللغة الإنجليزية
             _buildLanguageCard(
               title: "English",
               subtitle: "English",

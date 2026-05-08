@@ -1,3 +1,4 @@
+import 'package:customer/data/datasource/remote/linkapi.dart';
 import 'package:customer/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,18 +15,18 @@ class CartScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text(
-          "cart".tr,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: Text("cart".tr, style: TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: Colors.black,
         elevation: 0,
       ),
       body: Obx(() {
         if (controller.cartItems.isEmpty) {
-          return  Center(
-            child: Text("The basket is empty".tr, style: TextStyle(color: Colors.grey)),
+          return Center(
+            child: Text(
+              "The basket is empty".tr,
+              style: TextStyle(color: Colors.grey),
+            ),
           );
         }
         return Column(
@@ -49,14 +50,13 @@ class CartScreen extends StatelessWidget {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.network(
-                            baseUrl + item['image'],
+                            '${AppLink.imagesStatic}/${item['image']}',
                             width: 80,
                             height: 80,
                             fit: BoxFit.cover,
                           ),
                         ),
                         const SizedBox(width: 15),
-                        // بيانات المنتج
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,13 +70,12 @@ class CartScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 5),
                               Text(
-                                "${item['price']} "+"jod".tr,
+                                "${item['price']} " + "jod".tr,
                                 style: const TextStyle(color: Colors.orange),
                               ),
                             ],
                           ),
                         ),
-                        // التحكم في الكمية
                         Column(
                           children: [
                             Row(
@@ -152,7 +151,7 @@ class CartScreen extends StatelessWidget {
         children: [
           _rowSummary(
             "total".tr,
-            "${controller.total.toStringAsFixed(2)} "+"jod".tr,
+            "${controller.total.toStringAsFixed(2)} " + "jod".tr,
             isTotal: true,
           ),
           const SizedBox(height: 20),
@@ -171,7 +170,7 @@ class CartScreen extends StatelessWidget {
                 style: TextStyle(
                   color: const Color.fromARGB(255, 255, 254, 254),
                   fontWeight: FontWeight.bold,
-                  fontSize: 20.0
+                  fontSize: 20.0,
                 ),
               ),
             ),

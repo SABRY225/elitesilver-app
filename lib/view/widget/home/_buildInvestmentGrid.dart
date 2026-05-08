@@ -1,3 +1,4 @@
+import 'package:customer/data/datasource/remote/linkapi.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -36,7 +37,7 @@ Widget buildInvestmentGrid(List list) {
                     top: Radius.circular(12),
                   ),
                   child: Image.network(
-                    'http://192.168.1.5:5000' + list[i]['image'],
+                    AppLink.imagesStatic + list[i]['image'],
                     fit: BoxFit.cover,
                     width: double.infinity,
                     errorBuilder: (context, error, stackTrace) => const Icon(
